@@ -16,13 +16,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Run gate tests
+      - name: Run v3.1 gate tests
         run: python tests/test_gate.py
-      - name: Run convergence tests
+      - name: Run v3.1 convergence tests
         run: python tests/test_convergence.py
-      - name: Run partition tests
+      - name: Run v3.1 partition tests
         run: python tests/test_partition.py
+      - name: Run v4.0 tests
+        run: python tests/test_v4.py
       - name: Summary
         run: |
           echo "## ECP Test Suite Complete" >> $GITHUB_STEP_SUMMARY
-          echo "All three test modules passed." >> $GITHUB_STEP_SUMMARY
+          echo "v3.1 and v4.0 tests passed." >> $GITHUB_STEP_SUMMARY
