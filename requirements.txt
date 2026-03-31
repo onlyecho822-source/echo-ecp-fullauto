@@ -1,0 +1,18 @@
+# echo-ecp-fullauto dependencies
+#
+# Core engine: ZERO required dependencies.
+# Run python echo_system_v4.py with no installs.
+#
+# Optional — enables semantic convergence (embedding-based Jaccard):
+#   pip install sentence-transformers
+#
+# Optional — enables graph visualization queries:
+#   pip install networkx
+#
+# Optional — run tests with pytest instead of plain python:
+#   pip install pytest
+
+# Uncomment to install optional features:
+# sentence-transformers>=2.2.0
+# networkx>=3.0
+# pytest>=7.0
