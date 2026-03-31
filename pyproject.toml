@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "echo-ecp"
+version = "4.0.0"
+description = "Echo Convergence Protocol — governed multi-perspective reasoning engine with zero external dependencies"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+  {name = "Nathan Poinsette", email = "echonate@echouniverse.org"}
+]
+keywords = [
+  "reasoning", "convergence", "adversarial", "truth-partition",
+  "echo", "ecp", "ai-governance", "multi-perspective"
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://github.com/onlyecho822-source/echo-ecp-fullauto"
+Repository = "https://github.com/onlyecho822-source/echo-ecp-fullauto"
+Documentation = "https://github.com/onlyecho822-source/echo-ecp-fullauto/blob/main/docs/ARCHITECTURE.md"
+
+[project.scripts]
+echo-ecp = "echo_ecp:main"
+
+[tool.setuptools.packages.find]
+include = ["echo_ecp*"]
