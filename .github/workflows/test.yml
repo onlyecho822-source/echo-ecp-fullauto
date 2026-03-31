@@ -1,0 +1,28 @@
+name: ECP Test Suite
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why are you running tests?"
+        required: false
+        default: "Pre-commit verification"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run gate tests
+        run: python tests/test_gate.py
+      - name: Run convergence tests
+        run: python tests/test_convergence.py
+      - name: Run partition tests
+        run: python tests/test_partition.py
+      - name: Summary
+        run: |
+          echo "## ECP Test Suite Complete" >> $GITHUB_STEP_SUMMARY
+          echo "All three test modules passed." >> $GITHUB_STEP_SUMMARY
