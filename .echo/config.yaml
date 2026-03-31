@@ -1,0 +1,44 @@
+node_id: echo-ecp-fullauto
+node_type: reasoning_engine
+version: 3.1
+status: active
+date: 2026-03-31
+authority: Nathan Poinsette
+
+capabilities:
+  - ecp_loop
+  - truth_partition
+  - five_primitive_reasoning
+  - convergence_detection
+  - false_convergence_detection
+  - claim_labeling
+  - input_validation
+  - jsonl_memory
+
+primitives:
+  - Nathan   # What is the move?
+  - Echo     # How does it fit together?
+  - Devil    # How does this break?
+  - Light    # What is being obscured?
+  - God      # What are we not considering?
+
+flows:
+  - Standard
+  - Fast
+  - Research
+  - Audit
+
+subjects:
+  primary: echo.reasoning.ecp.engine
+  secondary: echo.reasoning.truth_partition
+
+integration:
+  dual_ai_loop: true
+  manus_compatible: true
+  claude_compatible: true
+
+notes: >
+  Merged from Claude v3 and Manus v3.
+  OOP primitive structure ready for LLM integration.
+  All 12 architectural gaps closed.
+  Low-signal detection operational.
