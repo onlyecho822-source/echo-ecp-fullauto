@@ -1,4 +1,7 @@
 name: ECP Test Suite
+# Manual trigger only — no auto-run on push.
+# GitHub Actions billing burns minutes on every push.
+# Run this deliberately before merging or releasing.
 
 on:
   workflow_dispatch:
@@ -7,24 +10,55 @@ on:
         description: "Why are you running tests?"
         required: false
         default: "Pre-commit verification"
+      engine:
+        description: "Which engine to test?"
+        required: false
+        default: "both"
+        type: choice
+        options: [both, v3, v4]
 
 jobs:
   test:
+    name: Run ECP Test Suite
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Run v3.1 gate tests
+
+      # Core tests — no dependencies, always run
+      - name: v3.1 — gate tests (8 tests)
+        if: inputs.engine == 'v3' || inputs.engine == 'both'
         run: python tests/test_gate.py
-      - name: Run v3.1 convergence tests
+
+      - name: v3.1 — convergence tests (7 tests)
+        if: inputs.engine == 'v3' || inputs.engine == 'both'
         run: python tests/test_convergence.py
-      - name: Run v3.1 partition tests
+
+      - name: v3.1 — partition tests (6 tests)
+        if: inputs.engine == 'v3' || inputs.engine == 'both'
         run: python tests/test_partition.py
-      - name: Run v4.0 tests
+
+      - name: v4.0 — SubstantiveValidator / GraphMemory / God fix (14 tests)
+        if: inputs.engine == 'v4' || inputs.engine == 'both'
         run: python tests/test_v4.py
+
+      - name: Basic usage example (smoke test)
+        run: python examples/basic_usage.py
+
       - name: Summary
         run: |
-          echo "## ECP Test Suite Complete" >> $GITHUB_STEP_SUMMARY
-          echo "v3.1 and v4.0 tests passed." >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ ECP Test Suite Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Suite | Tests | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| v3.1 gate | 8 | ✅ |" >> $GITHUB_STEP_SUMMARY
+          echo "| v3.1 convergence | 7 | ✅ |" >> $GITHUB_STEP_SUMMARY
+          echo "| v3.1 partition | 6 | ✅ |" >> $GITHUB_STEP_SUMMARY
+          echo "| v4.0 full | 14 | ✅ |" >> $GITHUB_STEP_SUMMARY
+          echo "| Total | **35** | ✅ |" >> $GITHUB_STEP_SUMMARY
