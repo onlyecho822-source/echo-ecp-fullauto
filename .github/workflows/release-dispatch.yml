@@ -1,0 +1,26 @@
+name: Release Dispatch
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify-storefront:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Dispatch to echo-echolibrary-site
+        run: |
+          curl -s -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/onlyecho822-source/echo-echolibrary-site/dispatches \
+            -d '{{"event_type":"product-updated","client_payload":{{"repo":"echo-ecp-fullauto","version":"${{{{ github.ref_name }}}}","released_at":"${{{{ github.event.release.published_at }}}}"}}}}'
+          echo "Dispatched product-updated to echo-echolibrary-site"
+        env:
+          GITHUB_TOKEN: ${{{{ secrets.GITHUB_TOKEN }}}}
+
+# Kraken tentacle — producer notifies storefront on release
+# Echo Universe · ECS v1.1-hardened · ∇θ
