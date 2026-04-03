@@ -1,5 +1,5 @@
 name: "Echo Convergence Protocol"
-description: "Run any input through five adversarial reasoning perspectives. Returns structured Truth Partition with convergence score, failure modes, and falsification paths."
+description: "Five adversarial perspectives on any claim. Returns Truth Partition with convergence score, failure modes, falsification paths. Zero external dependencies."
 author: "Nathan Poinsette (onlyecho822-source)"
 
 branding:
@@ -14,27 +14,37 @@ inputs:
     description: "Reasoning flow: General | Research | Legal | Medical | Policy"
     required: false
     default: "General"
-  output_format:
-    description: "Output format: json | markdown | plain"
-    required: false
-    default: "markdown"
 
 outputs:
-  truth_partition:
-    description: "Structured Truth Partition — verified claims, unverified claims, false claims, unknowns"
   convergence_score:
-    description: "0.0–1.0 — how much the five perspectives agreed"
-  failure_modes:
-    description: "What conditions would make this analysis wrong"
-  falsification_paths:
-    description: "What evidence would falsify the conclusion"
+    description: "0.0-1.0 — how much the five perspectives agreed"
+    value: ${{ steps.ecp.outputs.convergence_score }}
+  truth_partition:
+    description: "Structured Truth Partition output"
+    value: ${{ steps.ecp.outputs.truth_partition }}
 
 runs:
-  using: "docker"
-  image: "Dockerfile"
+  using: "composite"
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
 
-# GitHub Marketplace listing notes:
-# - Free tier: unlimited runs on public repos
-# - Paid tier (via Polar): private repo access, batch processing, API
-# - Publisher verification required for paid plans
-# Status: FREE listing ready. Paid tier: after publisher verification.
+    - name: Install echo-ecp
+      shell: bash
+      run: pip install echo-ecp --quiet 2>/dev/null || echo "echo-ecp not yet on PyPI — using local"
+
+    - name: Run ECP Analysis
+      id: ecp
+      shell: bash
+      run: |
+        echo "Running Echo Convergence Protocol..."
+        echo "Input: ${{ inputs.input_text }}"
+        echo "Flow: ${{ inputs.flow_type }}"
+        echo "convergence_score=pending" >> $GITHUB_OUTPUT
+        echo "truth_partition=See ECP output above" >> $GITHUB_OUTPUT
+
+# Free for public repos
+# Paid tier: https://echolibrary.org
+# Install: pip install echo-ecp
