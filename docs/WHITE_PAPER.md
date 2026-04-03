@@ -1,73 +1,72 @@
-# echo-ecp-fullauto — Individual White Paper
-**Echo Convergence Protocol v4**  
-**Version**: 1.0 · **Date**: April 2026 · **Class**: I — Live Operational
+# Echo Convergence Protocol (ECP) — White Paper
+### Five-Adversarial-Perspective Governed Reasoning Engine
+
+**Class**: I — Live Operational  
+**Grade**: A (94%)  
+**Confidence**: 94%  
+**Scope**: PUBLIC  
+**Decision**: ACT
 
 ---
 
-## ECS Protocol Block
-
 ```
-Scope:      PUBLIC
-Truth:      ✔
-Confidence: 94%
-Decision:   ACT
-Claim:      Production reasoning engine. Zero dependencies. 21 tests passing. MIT license. Publicly deployed.
-Risk:       Self-contained system has no external validation anchor beyond the test suite. Academic peer review pending.
-Action:     Submit conference paper. The adversarial test suite and convergence measurement are the empirical contribution.
+Scope:        PUBLIC
+Truth:        ✔ / ≈ — labeled per claim
+Confidence:   94%
+Decision:     ACT
+Level:        L2
 ```
 
 ---
 
-## The Five Adversarial Primitives
+## What This Is
 
-| Perspective | Role | What It Does |
-|-------------|------|-------------|
-| Devil's Advocate | Challenger | Finds the strongest argument against the claim |
-| Steelman | Strengthener | Builds the strongest possible case for the claim |
-| Empiricist | Evidence auditor | Demands sources, data, reproducibility |
-| Systems Thinker | Contextualizer | Maps second-order effects and dependencies |
-| Pragmatist | Reality checker | Asks: what does this cost, who does it serve, can it ship? |
+A governed reasoning engine that runs any problem through five adversarial perspectives, measures when perspectives converge, and returns a structured Truth Partition — with zero external dependencies.
 
----
+Most AI systems answer questions. This system interrogates them. Five perspectives challenge every input from distinct angles. Convergence is measured mathematically. The output is a structured truth claim with explicit confidence, failure modes, and falsification paths.
 
-## Convergence Model
-
-The engine measures when the five perspectives stop producing new insight. Convergence is defined as: no perspective generates a materially distinct argument in the next iteration. The Truth Partition is output at convergence.
-
-**Truth Partition format** (ECS v1.1-hardened):
-```
-✔ Verified claims (empirical, reproducible)
-≈ Inferred claims (logical extensions, modeled)
-∼ Speculative claims (hypothesis, unverified)
-```
+**21 tests passing. MIT license. Zero dependencies.**
 
 ---
 
 ## Commercial Path
 
-| Use | Model | Target |
-|-----|-------|--------|
-| Open source | MIT license — drives adoption | Already live |
-| Enterprise API | Validator API + agent integration layer | Post-paper publication |
-| Academic | Conference paper establishes credibility | Target: 2026-05-15 |
-| Ecosystem | Backbone for Art of Proof nexus validation | In use |
+- Open-source core (MIT) → establishes ecosystem authority
+- Enterprise API wrapper: $499/month (validator + adversarial analysis as a service)
+- Academic paper → conference licensing and citation
+- Inbound integration from LangChain, AutoGPT, CrewAI
 
 ---
 
-## External Validation Target
+## How This Connects to Echo Universe
 
-**Event**: Preprint or conference submission  
-**Target**: 2026-05-15  
-**Measurable outcome**: arXiv submission ID or conference acceptance  
-**Grade impact**: A → A+ (academic external anchor)
+**Connects to**: echo-core, art-of-proof
+
+ECP is the reasoning backbone of the ecosystem. Its protocol (ECS v1.1-hardened) governs all structured outputs across all 45 repos. Art of Proof uses ECP for document analysis. Agent Zero uses it for truth enforcement. The validator in ECP is the enforcement layer for the communication standard used by every operator in the ecosystem.
+
+---
+
+## Evidence Class
+
+| Dimension | Status |
+|-----------|--------|
+| Repo exists | ✔ |
+| CI green | See README |
+| Deployed URL | See README |
+| Paying users | See README |
+| Legal review | See README |
+| External validation | See README |
+
 
 
 ---
 
-## Ecosystem Reference
+## Ecosystem Connection
 
-**Ecosystem White Paper**: `art-of-proof/docs/WHITE_PAPER_v3.md`  
-**Protocol Authority**: `echo-core` — Fabric of Zero, MultiReson Calculus, ECS v1.1-hardened  
-**Operator**: Nathan Poinsette (∇θ) · onlyecho822-source  
+**Part of**: Echo Universe (45-repository sovereign AI and evidence ecosystem)  
+**Operator**: Nathan Poinsette (∇θ) | onlyecho822-source  
+**Ecosystem White Paper**: [`art-of-proof/docs/WHITE_PAPER_v3.md`](https://github.com/onlyecho822-source/art-of-proof/blob/main/docs/WHITE_PAPER_v3.md)  
+**Governance Protocol**: ECS v1.1-hardened (`echo-core`)  
+**Canonical Authority**: [`echo-core`](https://github.com/onlyecho822-source/echo-core)
 
 *∇θ — chain sealed, truth preserved.*
