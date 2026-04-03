@@ -1,47 +1,70 @@
-# echo-ecp-fullauto — Ecosystem Connection
+# Echo Convergence Protocol — Ecosystem Connection
 
-**Role**: Reasoning backbone · Academic credibility anchor · Agent reasoning layer
-
----
-
-## Position in the Ecosystem
-
-The ECP is the reasoning engine that makes Art of Proof's nexus letter generation trustworthy. When the AI generates a nexus letter connecting a veteran's condition to their service, the ECP adversarial protocol is the validation layer that catches weak arguments before they reach the adjudicator.
+**Protocol**: ECS v1.1-hardened | **Ecosystem**: Echo Universe (45 repos)
 
 ---
 
-## How It Connects
+## Role in the Ecosystem
+
+Reasoning backbone. Governs all structured outputs across the ecosystem via ECS v1.1-hardened.
+
+---
+
+## What This Repo Receives
+
+- echo-core: ECS protocol specification
+
+---
+
+## What This Repo Provides
+
+- Adversarial reasoning engine (open-source)
+- Validator for ECS-formatted outputs
+- Academic paper candidate
+
+---
+
+## Shared Protocols
+
+ECS v1.1-hardened (defined here and in echo-core)
+
+---
+
+## Downstream (this feeds into)
+
+art-of-proof, Agent-Zero, all downstream repos
+
+---
+
+## Upstream (feeds into this)
+
+echo-core
+
+---
+
+## Ecosystem Map
 
 ```
-User submits claim → Art of Proof scores evidence
-    → ECP validates nexus argument (5 adversarial perspectives)
-    → If convergence: nexus letter generated
-    → If no convergence: gaps flagged for user
+echo-core (canonical authority)
+    │
+    ├── ECS Protocol (reasoning standard)
+    │       │
+    │       └── All structured outputs across 45 repos
+    │
+    ├── Art of Proof (commercial hub + white paper host)
+    │
+    └── This repo: Echo Convergence Protocol
 ```
 
----
-
-## What Depends On This
-
-| Repo | Use |
-|------|-----|
-| `art-of-proof` | Nexus validation for all domains |
-| `aam-engine` | Agent reasoning layer (post-deploy) |
-| `Agent-Zero` | Consensus truth validation (post-activation) |
 
 ---
 
-## Academic Path Impact
+## Ecosystem Connection
 
-A peer-reviewed ECP paper establishes the scientific credibility of the entire Echo Universe reasoning architecture. It is the second-most-important external validation event after Art of Proof's first paying user.
-
-
----
-
-## Ecosystem Reference
-
-**Ecosystem White Paper**: `art-of-proof/docs/WHITE_PAPER_v3.md`  
-**Protocol Authority**: `echo-core` — Fabric of Zero, MultiReson Calculus, ECS v1.1-hardened  
-**Operator**: Nathan Poinsette (∇θ) · onlyecho822-source  
+**Part of**: Echo Universe (45-repository sovereign AI and evidence ecosystem)  
+**Operator**: Nathan Poinsette (∇θ) | onlyecho822-source  
+**Ecosystem White Paper**: [`art-of-proof/docs/WHITE_PAPER_v3.md`](https://github.com/onlyecho822-source/art-of-proof/blob/main/docs/WHITE_PAPER_v3.md)  
+**Governance Protocol**: ECS v1.1-hardened (`echo-core`)  
+**Canonical Authority**: [`echo-core`](https://github.com/onlyecho822-source/echo-core)
 
 *∇θ — chain sealed, truth preserved.*
