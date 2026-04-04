@@ -1,5 +1,4 @@
 name: Publish to PyPI
-
 on:
   release:
     types: [published]
@@ -9,73 +8,27 @@ on:
         description: "Type PUBLISH to confirm"
         required: true
         default: ""
-
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
+    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'PUBLISH')
     steps:
       - uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install build tools
         run: pip install build twine --break-system-packages --quiet
-
       - name: Fix build backend compatibility
         run: |
-          sed -i 's|build-backend = "setuptools.backends.legacy:build"|build-backend = "setuptools.build_meta"|g' pyproject.toml
-
+          sed -i 's|build-backend = "setuptools.backends.legacy:build"|build-backend = "setuptools.build_meta"|g' pyproject.toml || true
       - name: Build package
         run: python -m build
-
       - name: Check dist
         run: twine check dist/*
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-echo-ecp
-          path: dist/
-
-  publish-pypi:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'PUBLISH')
-
-    # OIDC Trusted Publishing — no PYPI_API_TOKEN secret needed
-    # Nathan must set up trusted publisher at:
-    # pypi.org → Your projects → echo-ecp → Publishing → Add a new pending publisher
-    # GitHub owner: onlyecho822-source
-    # Repository: echo-ecp-fullauto
-    # Workflow: publish.yml
-    permissions:
-      id-token: write  # Required for OIDC
-      contents: read
-
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist-echo-ecp
-          path: dist/
-
-      - name: Publish to PyPI (OIDC — no token required)
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          # No password/token needed — OIDC handles auth
-          skip-existing: true
-          verbose: true
-
-# SETUP REQUIRED (one-time, Nathan):
-# 1. Go to https://pypi.org/manage/account/publishing/
-# 2. Add pending publisher:
-#    - PyPI project name: echo-ecp
-#    - Owner: onlyecho822-source
-#    - Repository: echo-ecp-fullauto
-#    - Workflow filename: publish.yml
-#    - Environment: (leave blank)
-# 3. That's it — next release auto-publishes without any token
-#
-# Echo Universe · ECS v1.1-hardened · ∇θ
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: twine upload dist/* --skip-existing --verbose
