@@ -5,59 +5,72 @@ on:
     types: [published]
   workflow_dispatch:
     inputs:
-      test_pypi:
-        description: "Publish to TestPyPI instead"
-        required: false
-        default: "false"
+      confirm:
+        description: "Type PUBLISH to confirm PyPI upload"
+        required: true
+        default: ""
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
       - name: Install build tools
-        run: pip install build twine
+        run: pip install build twine --quiet
+
       - name: Build package
         run: python -m build
+
       - name: Check dist
         run: twine check dist/*
+
+      - name: Show what will be uploaded
+        run: ls -la dist/
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist
+          name: dist-echo-ecp
           path: dist/
 
-  publish-pypi:
+  publish:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' || github.event.inputs.test_pypi == 'false'
+    if: |
+      github.event_name == 'release' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'PUBLISH')
     environment: pypi
-    permissions:
-      id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          name: dist
-          path: dist/
+          python-version: "3.11"
+
+      - name: Install build tools
+        run: pip install build twine --quiet
+
+      - name: Build package
+        run: python -m build
+
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+          verbose: true
 
-  publish-testpypi:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event.inputs.test_pypi == 'true'
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-      - name: Publish to TestPyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+# To publish manually:
+# 1. Go to Actions tab → "Publish to PyPI" → Run workflow
+# 2. Type PUBLISH in the confirm box
+# 3. Click Run
+#
+# Requires: PYPI_API_TOKEN secret set in repo Settings → Secrets → Actions
+# Get token at: https://pypi.org/manage/account/token/
+# Echo Universe · ECS v1.1-hardened · ∇θ
