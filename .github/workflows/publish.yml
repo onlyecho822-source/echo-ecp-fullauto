@@ -15,27 +15,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install build tools
         run: pip install build twine --quiet
-
-      - name: Fix build backend compatibility
+      - name: Fix build backend
         run: |
           sed -i 's|build-backend = "setuptools.backends.legacy:build"|build-backend = "setuptools.build_meta"|g' pyproject.toml || true
-
-      - name: Build package
+      - name: Build
         run: python -m build
-
-      - name: Check dist
+      - name: Check
         run: twine check dist/*
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: dist-echo-ecp
           path: dist/
@@ -44,19 +36,17 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'PUBLISH')
-
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: dist-echo-ecp
           path: dist/
-
-      - name: Publish to PyPI (API token)
+      - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          password: ${{{{ secrets.PYPI_API_TOKEN }}}}
+          password: ${{ secrets.PYPI_API_TOKEN }}
           skip-existing: true
           verbose: true
 
-# Token-based auth — PYPI_API_TOKEN secret is set in repo secrets.
+# Uses PYPI_API_TOKEN secret (set 2026-04-04)
 # Echo Universe · ECS v1.1-hardened · ∇θ
