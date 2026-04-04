@@ -7,17 +7,19 @@ on:
     branches: [main, master]
 
 jobs:
-  # Call reusable CI from echo-kraken-brain
   ci:
     uses: onlyecho822-source/echo-kraken-brain/.github/workflows/reusable-python-ci.yml@main
     with:
       python-version: '3.11'
       run-tests: true
       test-dir: 'tests'
+      run-security: true
+    secrets: inherit
 
-  # Also run docs check
   docs:
     uses: onlyecho822-source/echo-kraken-brain/.github/workflows/reusable-docs-check.yml@main
+    secrets: inherit
 
-# Kraken tentacle — calls reusable brain workflows
+# Kraken tentacle — calls brain reusable workflows
+# Fixed: added secrets: inherit for cross-repo reusable workflow 2026-04-04
 # Echo Universe · ECS v1.1-hardened · ∇θ
