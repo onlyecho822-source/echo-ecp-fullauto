@@ -189,18 +189,15 @@ def main():
     for c in compat:  print(c)
     for o in order_w: print(o)
     if suggestions:
-        print("
-SUGGESTIONS:")
+        print("\nSUGGESTIONS:")
         for s in suggestions: print(s)
 
     fatal_count = sum(1 for c in compat if "FATAL" in c)
     if errors or fatal_count:
-        print("
-Result: FAIL")
+        print("\nResult: FAIL")
         sys.exit(1)
     else:
-        print(f"
-Result: PASS ({len(warns)} warning(s))")
+        print(f"\nResult: PASS ({len(warns)} warning(s))")
         sys.exit(0)
 
 
