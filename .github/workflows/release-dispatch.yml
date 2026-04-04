@@ -12,15 +12,19 @@ jobs:
 
     steps:
       - name: Dispatch to echo-echolibrary-site
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_DATE: ${{ github.event.release.published_at }}
+          SOURCE_REPO: ${{ github.event.repository.name }}
         run: |
           curl -s -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: token ${GH_TOKEN}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/onlyecho822-source/echo-echolibrary-site/dispatches \
-            -d '{{"event_type":"product-updated","client_payload":{{"repo":"echo-ecp-fullauto","version":"${{{{ github.ref_name }}}}","released_at":"${{{{ github.event.release.published_at }}}}"}}}}'
+            -d "{\"event_type\":\"product-updated\",\"client_payload\":{\"repo\":\"${SOURCE_REPO}\",\"version\":\"${RELEASE_TAG}\",\"released_at\":\"${RELEASE_DATE}\"}}"
           echo "Dispatched product-updated to echo-echolibrary-site"
-        env:
-          GITHUB_TOKEN: ${{{{ secrets.GITHUB_TOKEN }}}}
 
 # Kraken tentacle — producer notifies storefront on release
+# Fixed: brace escaping issue 2026-04-04
 # Echo Universe · ECS v1.1-hardened · ∇θ
